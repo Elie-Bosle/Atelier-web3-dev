@@ -1,0 +1,816 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Atelier Web 3.0 n°3: Apprendre à developper une cryptomonnaie et un NFT à l&#x27;aide d&#x27;un développeur Web 3.0</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9658c6da-aa02-4d6e-9bb6-3a6214650dbc" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">👨🏻‍💻</span></div><h1 class="page-title">Atelier Web 3.0 n°3: Apprendre à developper une cryptomonnaie et un NFT à l&#x27;aide d&#x27;un développeur Web 3.0</h1><p class="page-description"></p></header><div class="page-body"><p id="034ebe3e-1d3b-4c62-acb6-556e93f62396" class="">
+</p><nav id="95bbbddf-2108-4762-9f26-7c83917652e6" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#230fe4af-3fa7-4221-a20d-b89bc92dae65">Sujet</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#50055937-62b1-42ef-8b0a-1e7afd101a82">Les bases</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7fd15768-491a-4da6-a4ee-a865b0c54900">Développement d&#x27;un Token ERC 721</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#55f5f39c-750b-4565-b35f-08e87f5a7d03">Développement d&#x27;un Token ERC 20</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bda375ab-81c6-4678-8153-0bacb9041d3c">Bonus</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e1429da3-8cb9-4e51-96a9-1a337243d092">Lien entre token et NFT</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e838df7f-6157-4ef9-8880-0b134cb9f0a3">Code vide : </a></div></nav><p id="96898fba-a1e7-430a-93ad-677ac28adf99" class="">
+</p><h1 id="230fe4af-3fa7-4221-a20d-b89bc92dae65" class="">Sujet</h1><h2 id="50055937-62b1-42ef-8b0a-1e7afd101a82" class="">Les bases</h2><p id="41ad6b6d-8a21-4f14-b436-24ea7d65fad6" class="">
+</p><ul id="b2947cc7-ce15-4b78-aafb-6bca859c10a1" class="toggle"><li><details open=""><summary>Utilisez la bonne version </summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="efc767a0-2ee6-4632-8485-8b3dd5cbb6bb"><div style="font-size:1.5em"><span class="icon">ℹ️</span></div><div style="width:100%">Il y a différentes versions de Solidity. Pour que le code compile bien, il faut préciser en haut du fichier:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7da4b5c5-3e9e-4b90-97e7-ba90226a46f9" class="code"><code class="language-Solidity">pragma solidity ^0.8.0;</code></pre><p id="72c8051a-1761-4669-b251-574cd151210c" class="">Ici ^0.8.0 autorise les verison supérieures à 0.8.0 de Solidity.</p></div></figure></details></li></ul><ul id="f50d7438-8ef9-4f87-8f76-a93d91cfd423" class="toggle"><li><details open=""><summary>Créer un contrat (+ constructor)</summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e3fa5651-9147-42fe-ba0d-086d6695760f"><div style="font-size:1.5em"><span class="icon">ℹ️</span></div><div style="width:100%">Un contrat est l&#x27;équivalent d&#x27;une classe en java ou en C et C++.<br/>Il peut y en avoir plusieurs dans un seul fichier mais par soucis de visibilité, nous vous conseillons de faire un contrat par fichier. <br/>Dans chaque contrat, il y a un unique constructeur.<br/>Le code ci-dessous détaille comment créer un contrat et son constructeur.<br/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a0b6e089-3a9a-4113-a3a3-ed66df941b3f" class="code"><code class="language-Solidity">pragma solidity ^0.8.0;
+
+contract MyFirstContract {
+
+		constructor() public{
+
+		}
+}</code></pre><p id="d873c965-cb16-426f-bba1-1897061ad243" class="">Le mot clé public représente le domaine d&#x27;utilisation de la variable ou du constructeur (scope en anglais), c&#x27;est à dire dans quelles parties du code on peut l&#x27;utiliser ou non.<br/>Pour la déclaration de fonction, il existe différents mot clés: public, internal, external et private, nous ne détaillerons pas ces notions dans cet atelier, nous déclarons toutes les variables et fonctions en public.<br/></p></div></figure></details></li></ul><ul id="dd0bbc43-70e5-4fe4-8453-73ab9f1fce3e" class="toggle"><li><details open=""><summary>Créer une variable </summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="02409ff2-e1f3-4389-92b4-d0fa32eb2173"><div style="font-size:1.5em"><span class="icon">ℹ️</span></div><div style="width:100%">Pour les variables comme pour les fonctions et noms de contrat, on utilise la norme CamelCase, c&#x27;est à dire qu&#x27;on utilise pas les tirets ou les underscores.<br/>Pour déclarer une variable, on le déclare comme ci-dessus.<br/>Par la même occasion, nous donnons une liste non exhaustive des types de variables:<br/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="08433887-fd46-414d-9711-9602621d81d1" class="code"><code class="language-Solidity">pragma solidity ^0.8.0;
+
+uint nomVariable = 3;
+
+uint256 nomVariable = 3;
+
+bool nomVariable = true;
+
+string CeciEstUneString = &#x27;Hello World&#x27;;
+
+uint [] public nomVariable = [1, 2, 3, 4, 5];</code></pre><p id="c7ef0b9d-511b-4b79-ab68-4b379fa4c495" class="">Point important, le mot clé pour les entiers est “uint” et non “int” car les entiers n&#x27;existe pas, seules les entiers positifs (unsigned int) existent.</p><p id="201bfb1a-6539-4382-b295-8169e89d944c" class="">”uint8” : entier non signé qui peut contenir une valeur maximale de 2^8-1. uint8 ne doit utiliser qu&#x27;un seul octet d&#x27;espace de stockage.</p><p id="f4212389-99f4-4138-9d0e-01636d42a497" class="">”uint256” entier non signé qui peut contenir une valeur maximale de 2^(256)-1. uint256 nécessite 32 octets d&#x27;espace de stockage.</p><p id="4eec6eda-147f-4f55-a900-99d2a873297a" class="">Attention, les points virgules sont obligatoires en fin de ligne !</p></div></figure></details></li></ul><ul id="581bac56-ba99-4819-bb9f-a7b8c57108e7" class="toggle"><li><details open=""><summary>Créer une fonction</summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="37964bd7-461b-459e-a439-68eaa5fc7c84"><div style="font-size:1.5em"><span class="icon">ℹ️</span></div><div style="width:100%">Une fonction en solidity se crée de la manière suivante:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bf87222d-2928-4988-8f65-5e45e501a096" class="code"><code class="language-Solidity" style="white-space:pre-wrap;word-break:break-all">function Name(type parametre1, type parametre2,...) public view {
+        //code de la fonction
+}</code></pre><p id="97108671-fbe4-4f72-ba3e-0ae8c43996db" class="">Le mot clé public a la même signification que pour les variables et View indique que l&#x27;on ne modifie pas l&#x27;état de la blockchain. Cela est le cas seulement pour les getters, lorsqu&#x27;une variable change on retire View.</p><p id="f303b9ee-245b-46c9-a07e-78f4b9215172" class="">Si la fonction retourne une valeur, on devra préciser le type de la valeur que la fonction retournera : </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="94d44100-1d61-47f6-8d12-39e378c5a22c" class="code"><code class="language-Solidity" style="white-space:pre-wrap;word-break:break-all">function Name(type parametre1, type parametre2,...) public view returns(type){ 
+        //code de la fonction
+				return //value
+}</code></pre><p id="ca20fa3d-fd74-45b4-9eba-b48b4175526b" class="">Attention à bien utiliser “returns” dans la déclaration de la fonction et “return” dans le code de la fonction.</p></div></figure><p id="e2da395b-94fb-4250-9927-3396144c3a7b" class="">
+</p></details></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="672f804d-74de-4c94-8bfd-381662c82d2a"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%">Utiliser la version 0.8.20 de Solidity</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1fc9224d-706f-43ab-8ae5-a9303e1cb8b5"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%">Créer un contrat WelcomeToSolidity, ajoutez y deux variables: une chaine de caractères “name” et un entier “age”.</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e5afd705-bec9-4283-9a87-654e54c6eae6"><div style="font-size:1.5em"><span class="icon">3️⃣</span></div><div style="width:100%">Créer le constructeur du contrat qui associe nos deux variables précédentes à deux autres variables prises en paramètre du constructeur.<br/>On rappelle que la convention pour les noms des arguments est de mettre un “_” en premier caractère.<br/>De plus, il ne faut pas oublier de mettre le mot clé “memory” pour une chaîne de caractère exemple “string memory name”<br/></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="35194b71-5b8e-4941-a5e2-5fdf80644fbb"><div style="font-size:1.5em"><span class="icon">4️⃣</span></div><div style="width:100%">Créer une fonction getMessage qui retourne la chaine de caractères suivante : la variable “name” concaténée avec la chaine de caractère “ fait ses premiers pas en solidity”.</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e665fedd-375c-4503-a182-c5bee3a90229"><div style="font-size:1.5em"><span class="icon">5️⃣</span></div><div style="width:100%">Créer une fonction getResult qui crée deux entiers et retourne la somme des deux.</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="94e315bf-b490-4b31-8034-afae43cd8575"><div style="font-size:1.5em"><span class="icon">6️⃣</span></div><div style="width:100%">Créer une fonction sameParity ayant pour paramètre deux entiers. Si les deux entiers ont la même parité, la fonction retourne “true” sinon elle retourne “false”<br/>Indications: <br/><a href="https://solidity-fr.readthedocs.io/fr/latest/types.html">https://solidity-fr.readthedocs.io/fr/latest/types.html</a></div></figure><hr id="5bafee20-d85f-4831-a02a-ab265fd9dcc1"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="da1fe9d0-88c5-45aa-9b7e-da595f6d279f"><div style="font-size:1.5em"><span class="icon">🤚</span></div><div style="width:100%">Faites vérifier votre code par Clément, Elie ou Noé</div></figure><hr id="0da7a68e-43eb-4cda-85df-fc5ebdf8db08"/><p id="3e11656f-eaff-47af-82cf-1a4109c8d4a9" class="">Nous allons maintenant rentrer dans le vif du sujet !<br/>Nous vous laissons choisir dans un premier temps entre coder un NFT (Token ERC 721) et une cryptomonnaie (Token ERC 20).<br/>Lorsque que vous avez fini, faites celui que vous n&#x27;avez pas choisi et si vous avez le temps, à la fin, se situe une partie bonus mêlant les deux notions.<br/><br/>Enjoy 😉<br/></p><h2 id="7fd15768-491a-4da6-a4ee-a865b0c54900" class="">Développement d&#x27;un Token ERC 721</h2><p id="bbb4030a-e9b3-4714-9b9e-bdf394667ba1" class="">L&#x27;objectif ici est de créer un contrat associé à une collection NFT, ce contrat permettra d&#x27;obtenir un NFT, le transférer, gérer sa supply et de la connaitre à chaque instant.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="127239fc-de55-4ca9-9e5a-3e6bd6901eea"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%">Utilisez la version 0.8.20 de Solidity</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5fd67d8c-fd7d-4830-aa4e-ec6894ece982"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%">Importer les librairies via l&#x27;url fourni<br/>Nous vous encourageons à lire le contrat ERC 721 pour se familiariser avec les fonctions si vous le souhaitez.<br/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b1277d54-7175-480f-8567-b3b8d8981653" class="code"><code class="language-Solidity">import &quot;@openzeppelin/contracts/token/ERC721/ERC721.sol&quot;;</code></pre></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="026484b0-f797-4365-8ddc-4b89456c8cb6"><div style="font-size:1.5em"><span class="icon">3️⃣</span></div><div style="width:100%">Créez un contrat MyNFT qui hérite de ERC721.<br/>Pour l&#x27;héritage, on utilise le mot clé “is”.<br/></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b650c96d-1ca6-4081-88d5-46cacbab32ec"><div style="font-size:1.5em"><span class="icon">4️⃣</span></div><div style="width:100%">Créez trois variables globales: un entier non signé de taille 256 bits (”uint256”) appelé id, une variable de type “address” appelé owner </div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="137e18d2-396e-4a52-83f6-5a83dccae4a0"><div style="font-size:1.5em"><span class="icon">5️⃣</span></div><div style="width:100%">Le constructeur du contrat ERC721 prend cette forme:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="70f2b2e0-3434-4797-9819-71f2f044c2ea" class="code"><code class="language-Solidity">constructor() ERC721(&quot;Nom du NFT&quot;, &quot;Diminutif&quot;) {
+        //instructions
+    }</code></pre><p id="c282a85d-8e48-4a36-ab12-e53eebcf443d" class="">Dans ce constructeur, associez à la variable owner la personne qui appelle le contrat.</p></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="28388cd9-3fb1-436f-9ec8-c967cce33f03"><div style="font-size:1.5em"><span class="icon">6️⃣</span></div><div style="width:100%">Créer une fonction mint qui permet à celui qui appelle le contrat de récupérer un NFT en utilisant la fonction suivante:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a94e112d-a306-4177-99ba-6f952f33b041" class="code"><code class="language-Solidity">_safeMint(address, uint);
+_safeMint(&quot;variable qui correspond à celui qui appelle le contrat&quot;, &quot;numero du NFT&quot;);</code></pre><p id="312cf37c-5fd0-4ce2-8056-3ce52a3cddd8" class="">De plus, on souhaite que l&#x27;on puisse mint au plus 10 NFT. On vous laisse chercher comment mettre cette condition 😊.</p></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="054c5db2-dd82-4ef4-9a02-922e58defd67"><div style="font-size:1.5em"><span class="icon">7️⃣</span></div><div style="width:100%">Créer une fonction “getNumberOfNFTMinted” qui retourne le nombre de NFT qui ont été mint</div></figure><hr id="f4fecca7-25b7-40c4-8d0d-cfc17da5ccd4"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ddd15938-bb50-4eb3-b4a5-436438ab8f0f"><div style="font-size:1.5em"><span class="icon">🤚</span></div><div style="width:100%">Faites vérifier votre code par Clément, Elie ou Noé.</div></figure><h2 id="55f5f39c-750b-4565-b35f-08e87f5a7d03" class="">Développement d&#x27;un Token ERC 20</h2><p id="27183224-0091-45eb-ae74-d393e00a5d63" class="">L&#x27;objectif de cette partie est de créer un jeton avec une supply de notre choix, de le transférer à une adresse, de mint le token et de changer le possesseur du contrat.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a59365a3-2a74-4595-b982-35021c55cc78"><div style="font-size:1.5em"><span class="icon">1️⃣</span></div><div style="width:100%">Utilisez la version 0.8.20 de Solidity </div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5e1343ef-370c-4fb0-806a-32fd5823690f"><div style="font-size:1.5em"><span class="icon">2️⃣</span></div><div style="width:100%">Importer les librairies via l&#x27;url fourni<br/>Nous vous encourageons à lire le contrat ERC 20 pour se familiariser avec les fonctions si vous le souhaitez.<br/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ab29c4e-c8cf-4c79-8803-25e294da45cb" class="code"><code class="language-Solidity">import &quot;@openzeppelin/contracts/token/ERC20/ERC20.sol&quot;;</code></pre></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8e7c2174-916a-4689-9faf-a24f71c31c4e"><div style="font-size:1.5em"><span class="icon">3️⃣</span></div><div style="width:100%">Créez un contrat MyToken qui hérite de ERC20.</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c1c13017-0deb-4be2-aedf-9f41b7954ba7"><div style="font-size:1.5em"><span class="icon">4️⃣</span></div><div style="width:100%">Créez deux variables globales: un entier non signé de taille 256 bits appelé _<em>initial_</em>supply, une variable de type “address” public appelé owner. Affectez à l&#x27;entier non signé la supply que vous voulez. <br/>Attention, on veut que notre token ait 18 décimales pour cela sous la forme uint : 1 token = 10 ** 18<br/></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="40703ea0-2c00-4999-904b-1280742cea26"><div style="font-size:1.5em"><span class="icon">5️⃣</span></div><div style="width:100%">Le constructeur du contrat ERC20 prend la même forme que celui de l&#x27;ERC 721.<p id="11eb64c6-b298-47f9-985b-2fbfd4983557" class="">Dans ce constructeur, associez à la variable owner la personne qui appelle le contrat et utilise la fonction du contrat ERC 20 qui permet de Mint, l&#x27;instruction doit permettre à la personne qui appelle le contrat de Mint toute la supply.</p></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c0d4eb71-494e-4766-a7be-64bb4bc3f3b4"><div style="font-size:1.5em"><span class="icon">6️⃣</span></div><div style="width:100%">Créer une fonction Mint ayant pour argument une variable de type address et un unsigned int : uint. Cette fonction s&#x27;assure que l&#x27;owner est bien celui qui appelle le contrat et qui utilise la fonction Mint du contrat ERC 20 avec les arguments de la fonction.</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1b09acf0-eb83-40fc-949a-71a0c206184b"><div style="font-size:1.5em"><span class="icon">7️⃣</span></div><div style="width:100%">Créer une fonction changeOwner qui a pour argument une address, celle-ci s&#x27;assure que l&#x27;owner est bien la personne qui appelle le contrat.<br/>Cette fonction associé à la variable owner le paramètre de la fonction.<br/></div></figure><hr id="62853eb2-588d-4a20-b644-6edbf28f78b2"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7c8e2f62-2b43-4718-8e4a-5c90173e5e20"><div style="font-size:1.5em"><span class="icon">🤚</span></div><div style="width:100%">Faites vérifier votre code par Clément, Elie ou Noé.</div></figure><hr id="6e21ac46-2175-44cd-a4f0-fd1da481c58b"/><h1 id="bda375ab-81c6-4678-8153-0bacb9041d3c" class="">Bonus</h1><p id="d9119793-59ff-4b1f-b25e-e2a03d2636aa" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4bbd8f57-6954-4c6b-8b8c-f07de171ef07"><div style="font-size:1.5em"><span class="icon">❔</span></div><div style="width:100%">Rajouter une variable bool “trading”, lorsque cette variable est égale à “false”, seul l’owner peut appeler la fonction _transfer. <br/>Ensuite, faites une fonction qui met la variable “trading” égale à true. Cette fonction ne peut être appelée que par l’owner.<br/></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1b45741d-876f-4e89-a6a9-1fc3767a1ca4"><div style="font-size:1.5em"><span class="icon">❔</span></div><div style="width:100%">Rajouter 2 variables : <ul id="bf4993c6-e024-4e0c-893a-3a61efff1b80" class="bulleted-list"><li style="list-style-type:disc">maxWallet : nombre de tokens maximum qu’une personne peut posséder. </li></ul><ul id="53c28c0d-0f52-45fd-8b1c-19e896780711" class="bulleted-list"><li style="list-style-type:disc">maxAmount : montant de token maximum par transaction</li></ul><p id="b9547bfe-500b-49ec-8258-9972668fe96b" class="">
+</p><p id="ad785ea6-20ce-454c-b7f9-0003193f89ff" class="">Rajouter une variable “tax” qui correspond à un % de chaque transaction qui ira dans le wallet de l’owner.<br/>Exemple : si tax = 5 alors 5% de chaque transaction ira dans le wallet de l’owner.<br/></p><p id="02159da3-304a-406f-a908-033e7a819a85" class="">
+</p><p id="b5b1c2a1-113e-4c28-aeee-f8bc51336b07" class="">Modifier la fonction _transfer : </p><p id="98b8d0c2-5670-4af3-9054-bcb174031141" class="">Aller dans le contrat ERC20.sol que l’on a importé, puis au niveau de la fonction “_transfer()” ajouter le mot clé “virtual” après le mot clé “internal”</p><p id="28f2aa25-4f01-4794-8daa-370960c5740c" class="">Dans notre contrat, écrivez la fonction _transfer comme cela :</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="56b3114e-9158-4ae6-8178-00c5054a93fa" class="code"><code class="language-Solidity">function _transfer(address from, address to,uint256 amount) internal override {
+		//modification que l&#x27;on veut apporter
+		super._transfer(from, to, amount); //appel de la fonction _transfer
+}</code></pre><p id="1a8c4da0-1f61-4bc7-9616-87d984560051" class="">Le mot clé “override” permet de modifier la fonction _transfer du contrat ERC20.sol, </p><p id="151362e3-604a-4ebd-b87c-df8895cec2f5" class="">
+</p></div></figure><p id="096ea616-2d65-4c3c-a696-03d5e22fb887" class="">
+</p><h1 id="e1429da3-8cb9-4e51-96a9-1a337243d092" class="">Lien entre token et NFT</h1><p id="6e0f4333-6be1-4029-95fd-ba48aaf2334b" class="">
+</p><p id="fa865688-2e8b-49cb-af5d-e1a771eca131" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cb4c6a7c-1157-487b-afbd-34ada358565d"><div style="font-size:1.5em"><span class="icon">❔</span></div><div style="width:100%">Déployer le contrat du NFT précédemment réalisé</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8d4eb99a-dc57-45ba-9e92-7584c8b737b8"><div style="font-size:1.5em"><span class="icon">❔</span></div><div style="width:100%">Créer un contrat Token et importer les contrats suivants, vous trouverez en bas de la page les contrats “IUniswapV2Factory.sol” et “IUniswapV2Router02”<ul id="e98f22ef-a6b1-4d31-83ce-bf436ac862f0" class="bulleted-list"><li style="list-style-type:disc">ERC20.sol</li></ul><ul id="9d29706e-cefc-47f4-bcdb-3086a3922ffc" class="bulleted-list"><li style="list-style-type:disc">ERC721.sol</li></ul><ul id="c7525254-a491-40a1-9ed4-d8f2c53d8140" class="bulleted-list"><li style="list-style-type:disc">IUniswapV2Factory.sol</li></ul><ul id="8566edda-7607-4df7-b0c8-0150caff5539" class="bulleted-list"><li style="list-style-type:disc">IUniswapV2Router02.sol</li></ul></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ae613688-d858-4d76-9af2-cefecdff5486"><div style="font-size:1.5em"><span class="icon">❔</span></div><div style="width:100%">Récupérez l’adresse du contrat NFT que vous avez déployé et créez une variable “NFT” de type address qui sera égale à l’adresse du contrat NFT</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b95cc442-f4c9-40d4-8156-ca4a8c2c42e5"><div style="font-size:1.5em"><span class="icon">❔</span></div><div style="width:100%">Modifier la fonction _beforeTokenTransfer(from, to, amount) du contrat ERC20 de sorte à ce que : <ul id="e74a54d9-13b5-482c-a523-b73c7fbce4ff" class="bulleted-list"><li style="list-style-type:disc">si “from” ou “to” n&#x27;est pas le owner, il faut que “from” ou “to” possède le NFT.</li></ul></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d8ddb26a-4d06-40a5-9de8-4bc18d3532f7"><div style="font-size:1.5em"><span class="icon">❔</span></div><div style="width:100%">Ecrire une fonction doesUserHasNFT qui prend une adresse en paramètre et renvoie “true” si l’adresse possède le NFT et “false” sinon</div></figure><h2 id="e838df7f-6157-4ef9-8880-0b134cb9f0a3" class="">Code vide : </h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c0d3c09d-93e6-4a90-ad54-a26057f35ed6" class="code"><code class="language-Solidity">pragma solidity ^0.8.0;
+
+//import
+
+contract Token is ERC20 {
+    uint constant _initial_supply = 100000 * (10 ** 18);
+
+    address public owner;
+    address public sennder; // servira pour la fonction _beforeTokenTransfer
+    uint256 public _amount; // servira pour la fonction _beforeTokenTransfer
+    address public receiver; // servira pour la fonction _beforeTokenTransfer
+    address NFT = ; // adresse du contrat NFT
+
+    mapping(address =&gt; bool) public exempt; // owner sera exempt et n&#x27;aura pas besoin de posséder le NFT pour transférer le jeton
+
+    address public lpPair; // adresse de la paire Token / WETH
+    IUniswapV2Router02 public uniRouter;
+    address _uniswap;
+
+    constructor() ERC20(&quot;TokenTest&quot;, &quot;TKN&quot;) {
+        exempt[msg.sender] = true; // exclut l&#x27;owner, il n&#x27;aura pas besoin de posséder le NFT
+        _mint(msg.sender, _initial_supply); // mint la total supply vers l&#x27;owner
+        owner = msg.sender; 
+
+        _uniswap = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D; // adresse uniswap Router
+        uniRouter = IUniswapV2Router02(_uniswap);
+        lpPair = IUniswapV2Factory(uniRouter.factory()).createPair( // crée la paire Token / WETH
+            address(this),
+            uniRouter.WETH()
+        );
+    }
+
+    function _beforeTokenTransfer( // modification de la fonction _beforeTokenTransfer
+        address from,
+        address to,
+        uint256 amount
+    ) internal override {
+        //...
+          sennder = from;
+          receiver = to;
+          _amount = amount;
+       
+    }
+
+    function mint(address to, uint256 amount) public {
+        require(owner == msg.sender);
+        _mint(to, amount);
+    }
+
+    function exemptAddress(address _address) external {
+        exempt[_address] = true;
+    }
+
+    function changeOwner(address _owner) public {
+        require(owner == msg.sender);
+        owner = _owner;
+    }
+
+    function doesUserHasNFT(address _address) external view returns (bool) { // Permet de voir si un user possède le NFT ou non
+        //...
+    }
+}</code></pre><p id="e97d7e77-7b98-48fd-a9c5-d2f2f419c220" class="">
+</p><ul id="5337c3f2-7ce6-4601-9f0c-c9207d3fa191" class="toggle"><li><details open=""><summary><strong>Contrats</strong></summary><ul id="63096609-7617-4706-8fed-e5e1dd5b5ede" class="toggle"><li><details open=""><summary>IUniswapV2Factory</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9fb224a7-7c40-46bc-86aa-250575e80777" class="code"><code class="language-Solidity">pragma solidity ^0.8.0;
+
+interface IUniswapV2Factory {
+    function createPair(
+        address tokenA,
+        address tokenB
+    ) external returns (address pair);
+}</code></pre></details></li></ul><ul id="3fc263ff-fbf6-435e-8233-43cf5c8ecf0e" class="toggle"><li><details open=""><summary>IUniswapV2Router02</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9a8860e2-40b1-46fb-8fe0-d8aff3a918e9" class="code"><code class="language-Solidity">pragma solidity ^0.8.0;
+
+interface IUniswapV2Router02 {
+    function factory() external pure returns (address);
+
+    function WETH() external pure returns (address);
+
+    function swapExactTokensForETHSupportingFeeOnTransferTokens(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external;
+
+    function swapExactETHForTokensSupportingFeeOnTransferTokens(
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external payable;
+
+    function getAmountsOut(
+        uint amountIn,
+        address[] calldata path
+    ) external view returns (uint[] memory amounts);
+
+    function getAmountsIn(
+        uint amountOut,
+        address[] calldata path
+    ) external view returns (uint[] memory amounts);
+}</code></pre></details></li></ul></details></li></ul><p id="574ac5f8-6c2c-414e-bc1e-788faa4ce426" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
